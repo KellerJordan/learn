@@ -1,0 +1,23 @@
+a.test {
+    color: white;
+    font-size: 44px;
+    background-color: blue;
+}
+
+#gameArea {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+#menuContainer {
+    position: relative;
+    z-index: 2;
+}
+
+#bottomMenu {
+    position: fixed;
+    bottom: 0;
+    background-color: green;
+}
