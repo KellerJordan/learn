@@ -1,0 +1,38 @@
+<style>
+    canvas {
+  display : block;
+  width : 900px;
+  height : 900px;
+  margin : auto;
+  padding : 0;
+  border : none;
+  background-color : grey;
+}
+
+</style>
+<canvas>Your browser does not seem to support 
+    HTML5 canvas.</canvas>
+<script  id="vertex-shader-2d" type="notjs">
+
+  attribute vec2 a_position;
+  attribute vec4 a_color;
+  varying vec4 v_color;
+
+  void main() {
+    gl_Position = vec4(a_position, 0, 1);
+    v_color = a_color;
+  }
+
+</script>
+<script  id="fragment-shader-2d" type="notjs">
+  
+  precision mediump float;
+  varying vec4 v_color;
+
+  void main() {
+    gl_FragColor = v_color;
+  }
+
+</script>
+
+<script src="https://webglfundamentals.org/webgl/resources/webgl-utils.js"></script>

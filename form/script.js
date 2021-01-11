@@ -1,15 +1,18 @@
-function runCycles() {
+function runCycles(cycles=200e6, verbose=true) {
     let j = 1;
     let k = 1;
-    for (let i = 0; i < 200000000; i++) {
+    let mod1 = 2**29;
+    let mod2 = 23457;
+    for (let i = 0; i < cycles; i++) {
         k = j + k;
         j = k - j;
-        j = j % 423948; 
-        k = k % 4234234;
-        if ((i % 20000000) == 0) {
+        j = j % mod1; 
+        k = k % mod1;
+        if (verbose && ((i % 20e6) == 0)) {
             console.log(j, k);
         }
     }
+    console.log(k);
 }
 
 function test1() {
@@ -115,6 +118,42 @@ function test5() {
         z = 4;
     }, 500);
 }
-test5();
+// test5();
+
+function test6() {
+    function myHi() {
+        console.log(this.myName);
+    }
+    let obj = {
+        myName: "Bob",
+        hi1() {
+            console.log(this.myName);
+        },
+        hi2() {
+            myHi();
+        },
+        hi3() {
+            myHi.call(this);
+        }
+    }
+    obj.hi1();
+    obj.hi2();
+    obj.hi3();
+    let hi = obj.hi1;
+    hi();
+    (function(hi) {
+        hi();
+    })(obj.hi1);
+    (hi => hi())(obj.hi1);
+}
+// test6();
+
+function test7() {
+    let t1 = Date.now();
+    runCycles(880e6, false);
+    let t2 = Date.now();
+    console.log(`Took ${t2 - t1} ms.`);
+}
+test7();
 
 
