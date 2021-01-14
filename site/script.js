@@ -27,8 +27,6 @@ window.addEventListener("blur", function listener(e) {
     if (document.activeElement.tagName == "IFRAME") {
         console.log("I can smell you clicking : -- )");
     }
-    // need a timeout here -- 0ms delay works on chrome but unsure for other browsers.
-    // using microtasks (aka Promises) does not work in Chrome. Interesting.
-    setTimeout(() => window.focus(), 1);
+    // replacing the below setTimeout (macrotask) with a Promise (microtask) will fail to refocus the window in Chrome.
+    setTimeout(() => window.focus(), 0);
 });
-
