@@ -4,7 +4,7 @@ a.test {
     background-color: blue;
 }
 
-#gameArea {
+#drawArea {
     position: absolute;
     z-index: 1;
     top: 0;

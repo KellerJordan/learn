@@ -1,37 +1,44 @@
 let drawArea = {
     start() {
-        this.canvas = document.querySelector("canvas");
+        this.canvas = document.querySelector("#drawArea");
         this.context = this.canvas.getContext("2d");
+        this.scale = 2.5;
+        this.context.scale(this.scale, this.scale);
+        this.context.strokeStyle = "lightblue";
+        this.context.lineWidth = "5px";
+        this.boxX0 = 0;
+        this.boxY0 = 0;
+        this.boxX1 = 0;
+        this.boxX2 = 0;
+        this.selecting = false;
+        this.image = undefined;
+        this.pictureX = -2;
+        this.pictureY = -2;
+        this.pictureRes = 0.005 / this.scale;
     },
     adjustSize() {
-        this.canvas.setAttribute("width", window.innerWidth);
-        this.canvas.setAttribute("height", window.innerHeight);
+        this.canvas.style.width = window.innerWidth+"px";
+        this.canvas.style.height = window.innerHeight+"px";
+        this.canvas.width = window.innerWidth * this.scale;
+        this.canvas.height = window.innerHeight * this.scale;
     },
     clear() {
         this.context.clearRect(0, 0, this.canvas.width, this.context.height);
     },
-    drawPicture() {
-        let ctx = this.context;
+    // x, y for top-left corner position, r for pixel resolution
+    async getPicture() {
         let width = this.canvas.width;
         let height = this.canvas.height;
-
-        ctx.drawStyle = "blue";
-        ctx.fillStyle = "orange";
-        ctx.fillRect(0, 0, width, height);
-
-        let gradient = ctx.createLinearGradient(0, 0, width, 0);
-        gradient.addColorStop("0", "magenta");
-        gradient.addColorStop("0.5", "blue");
-        gradient.addColorStop("1.0", "red");
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 14;
-        ctx.font = "190px Georgia";
-        let pad = 35;
-        ctx.strokeText("yah baway      !", pad, 250, width-2*pad);
+        let image = await genPicture(this.pictureX, this.pictureY, width, height, this.pictureRes);
+        this.image = image;
     },
-    drawFractal() {
-        let image = genPicture(0, 0, this.canvas.width, this.canvas.height, 1);
-        this.context.drawImage(image, 1, 1);
+    draw() {
+        if (this.image) {
+            this.context.drawImage(this.image, 0, 0);
+        }
+        if (this.selecting) {
+            this.context.strokeRect(this.boxX0, this.boxY0, this.boxX1 - this.boxX0, this.boxY1 - this.boxY0);
+        }
     }
 }
 
@@ -49,22 +56,42 @@ function registerHandlers() {
     drawArea.canvas.addEventListener("contextmenu", e => {
         e.preventDefault();
     });
+    // Handle selection box
+    drawArea.canvas.addEventListener("mousedown", e => {
+        drawArea.selecting = true;
+        drawArea.boxX0 = drawArea.scale * e.x;
+        drawArea.boxY0 = drawArea.scale * e.y;
+    });
+    drawArea.canvas.addEventListener("mousemove", e => {
+        drawArea.boxX1 = drawArea.scale * e.x;
+        drawArea.boxY1 = drawArea.scale * e.y;
+    });
+    drawArea.canvas.addEventListener("mouseup", e => {
+        drawArea.selecting = false;
+        drawArea.pictureX += drawArea.boxX0 * drawArea.pictureRes;
+        drawArea.pictureY += drawArea.boxY0 * drawArea.pictureRes;
+        drawArea.pictureRes *= (drawArea.boxX1 - drawArea.boxX0) / drawArea.canvas.width;
+        console.log(drawArea.pictureX, drawArea.pictureY, drawArea.pictureRes);
+        MAX_STEPS += 30;
+        drawArea.getPicture();
+    });
 }
 
-// Main game loop
+// ``Main game loop"
+// Just for drag-box selection, not for main picture drawing
 function playTick() {
     drawArea.adjustSize();
     drawArea.clear();
-    drawArea.drawPicture();
+    drawArea.draw();
 }
 
+const FPS = 60;
 function main() {
     drawArea.start();
     registerHandlers();
-    //setInterval(playTick, 1000 / gameParameters.fps);
+    setInterval(playTick, 1000 / FPS);
     playTick();
-    drawArea.drawFractal();
-
+    drawArea.getPicture();
 }
 
 
