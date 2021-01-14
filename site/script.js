@@ -1,5 +1,5 @@
-let shade = document.querySelector("#embed-shade");
-let player = document.querySelector("#embed-container");
+const shade = document.querySelector("#embed-shade");
+const player = document.querySelector("#embed-container");
 shade.addEventListener("click", e => {
     shade.style.display = "none";
     player.style.left = "0px";
@@ -13,9 +13,13 @@ shade.addEventListener("click", e => {
     }, duration);
 });
 
+// raising this above 15 will prevent all interaction with the iframe.
+// general rule is that every time you move an iframe more than 15px (Manhattan distance) from its starting position,
+// it will be non-interactive for 0.5s and resample a new starting position
+const shakePixels = 15;
 function shakeElem(elem, duration) {
     let off = Number(elem.style.left.slice(0, -2));
-    off = (off != 0) ? 0 : 15;
+    off = (off != 0) ? 0 : shakePixels;
     elem.style.left = String(off) + "px";
     if (duration >= 100) {
         setTimeout(() => shakeElem(elem, duration-100), 100);
@@ -30,3 +34,6 @@ window.addEventListener("blur", function listener(e) {
     // replacing the below setTimeout (macrotask) with a Promise (microtask) will fail to refocus the window in Chrome.
     setTimeout(() => window.focus(), 0);
 });
+
+console.log(document.currentScript);
+console.log(document.currentScript.nonce);
