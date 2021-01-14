@@ -37,3 +37,10 @@ window.addEventListener("blur", function listener(e) {
 
 console.log(document.currentScript);
 console.log(document.currentScript.nonce);
+
+function addYTAPI() {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
