@@ -1,0 +1,37 @@
+Represent FSMs. Test whether they are equivalent.
+
+There are 2 1-state FSMs, which can recognize 2 distinct regular languages.
+There are 64 2-state FSMs, which can recognize 26 distinct regular languages.
+There are 5832 3-state FSMs, which can recognize 1054 distinct regular languages.
+There are 1048576 4-state FSMs, which can recognize 52696, 57067(!), 57068 distinct regular languages.
+
+
+Generally speaking, most (or at least a substantial fraction of) n-state FSMs are bona fide,
+in that there exist strings which will reach every state.
+E.g. as opposed to an n-state FSM where there are no arrows out of the starting state.
+
+
+Every n-state FSM is trivially equivalent to (n-1)! FSMs which are just the result of permuting the non-starting states
+(along with their acceptance values).
+
+
+
+E.g. of 3-state FSMs, 35% of FSMs have trivial equivalence classes. And of 4-state, 27% have trivial classes.
+So you can't speed up too significantly by any method of recognizing large equivalence classes.
+
+
+We call two n-state FSMs equivalent when they accept the same strings.
+Call a pair of states (s, t) reachable by the pair of FSMs (F_1, F_2) if there exists a string resulting in the pair.
+Then F_1 is equivalent to F_2 exactly when every reachable pair of states agrees in terms of acceptance.
+From here it is immediate that the equivalence of n-state machines is determined by the strings of length <= n^2-1.
+Because every reachable pair is reachable from such a string.
+
+
+Therefore the brute-force complexity of counting the number of regular languages recognized by n-state FSMs is:
+Number of strings of len <= n^2-1: O(2^{n^2})
+Machine reads single string: O(n^2)
+Generate acceptance pattern for one machine: O(n^2 2^{n^2})
+Number machines: n^{2n} 2^n
+Total: O(2^{n + 2(n+1)log n + n^2})
+
+More or less logarithmically dominated by the cost of doing a single machine, despite the extreme growth in #machines as well.
