@@ -3,8 +3,8 @@ rescaleCanvas(canv, 2.0);
 const gl = canv.getContext("webgl");
 
 const PARAMS = {
-    inChunkReps: 256,
-    chunkReps: 4,
+    inChunkReps: 16,
+    chunkReps: 1,
 };
 
 function makeScene() {
@@ -20,15 +20,15 @@ function makeScene() {
             x+1, y,
             x+1, y+1,
         ]);
-        /*
         colorArray.push(...Array(18).fill(s));
-        */
+        /*
         colorArray.push(...Array(9).fill(s));
         if (s == 0.0) {
             colorArray.push(...[1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0]);
         } else {
             colorArray.push(...[0, 1, 0, 0, 1, 0, 0, 1, 0]);
         }
+        */
     }
     for (let x = 0; x < reps; x++) {
         for (let y = 0; y < reps; y++) {
@@ -148,6 +148,7 @@ const frameTracker = {
 };
 
 let prevTime = Date.now();
+let currFrame;
 function frame() {
     let currTime = Date.now();
     let delta = currTime - prevTime;
@@ -171,6 +172,10 @@ function frame() {
 
     draw(gameState.zee);
 
-    requestAnimationFrame(frame);
+    currFrame = requestAnimationFrame(frame);
 }
-frame();
+currFrame = frame();
+
+function cancelFrames() {
+    cancelAnimationFrame(currFrame);
+}
