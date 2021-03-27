@@ -3,8 +3,8 @@ rescaleCanvas(canv, 2.0);
 const gl = canv.getContext("webgl");
 
 const PARAMS = {
-    inChunkReps: 16,
-    chunkReps: 1,
+    inChunkReps: 256,
+    chunkReps: 4,
 };
 
 function makeScene() {
