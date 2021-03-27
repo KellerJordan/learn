@@ -1,6 +1,9 @@
 const canv = document.querySelector("canvas");
-rescaleCanvas(canv, 2.0);
-const gl = canv.getContext("webgl");
+rescaleCanvas(canv);
+const gl = canv.getContext("webgl", {
+    antialias: false,
+});
+//gl.disable(gl.DITHER);
 
 const PARAMS = {
     inChunkReps: 256,
@@ -123,17 +126,21 @@ const gameState = {
 
 const dashslots = (function () {
     const dashboard = document.querySelector("#dashboard");
-    dashboard.addEventListener("click", () => {
+    const [p1, p2] = dashboard.querySelectorAll("p");
+    const [b1, b2, b3] = dashboard.querySelectorAll("button");
+    b1.addEventListener("click", e => {
+        gameState.zee = canv.height / 2;
+    });
+    b2.addEventListener("click", e => {
+        gameState.zee = canv.height;
+    });
+    b3.addEventListener("click", () => {
         let newZee = Number(window.prompt("Where to boss? (I suggest 1600 or 4900 or 6500)"));
         if (newZee > 0) {
             gameState.zee = newZee;
         }
     });
-    const p1 = document.createElement("p");
-    const p2 = document.createElement("p");
-    dashboard.appendChild(p1);
-    dashboard.appendChild(p2);
-    return [p1, p2];
+    return [p1, p2, b1, b2];
 })();
 
 const frameTracker = {
