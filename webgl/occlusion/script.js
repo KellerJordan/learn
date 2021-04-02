@@ -1,5 +1,5 @@
 const canv = document.querySelector("canvas");
-rescaleCanvas(canv, 2.0);
+rescaleCanvas(canv);
 const gl = canv.getContext("webgl");
 gl.enable(gl.DEPTH_TEST);
 
