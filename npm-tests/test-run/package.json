@@ -1,0 +1,17 @@
+{
+  "name": "test2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "myscript",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "thing": "myscript"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "absurd15": "0.0.0"
+  }
+}

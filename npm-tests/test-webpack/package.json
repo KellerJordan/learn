@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "webpack": "^5.30.0"
+  }
+}
