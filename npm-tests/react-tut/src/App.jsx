@@ -31,17 +31,44 @@ class Clock extends Component {
     }
 }
 
+function Example() {
+    const [count, setCount] = React.useState(0);
+    console.log(`Example() called, count=${count}`);
+    globalThis.setCount = setCount;
+    return (
+        <div>
+            <button onClick={() => setCount(count+1)}>click me</button>
+            <div>fake count</div>
+            <SubExample/>
+        </div>
+    );
+}
+
+function SubExample() {
+    const [myCount, mySetCount] = React.useState(5);
+    console.log(`MyExample() called, count=${myCount}`);
+    globalThis.mySetCount = mySetCount;
+    return (
+        <div>
+            sub example
+        </div>
+    );
+}
+
 class App extends Component {
     render() {
+        console.log("App.render() called");
         return (
             <div className="App">
                 <h1>Hello, World!</h1>
                 <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"/>
-                <Clock/>
-                <MyCanvas/>
+                <Example/>
             </div>
         );
     }
 }
+
+globalThis.thingy = React.Fragment;
+console.log(React.Fragment);
 
 export default App;
