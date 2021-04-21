@@ -1,22 +1,12 @@
 const vertexShaderSource = `
-uniform float u_screenXRatio;
-uniform float u_screenYRatio;
-uniform float u_scale;
-
-uniform vec2 u_offset;
-
-attribute vec3 a_position;
-attribute vec3 a_color;
-
 varying vec3 v_color;
 
-vec3 position;
+attribute vec4 a_position;
+attribute vec3 a_color;
 
 void main() {
     v_color = a_color;
-    position = vec3(u_offset, 0.0) + a_position;
-    position = vec3(position.x * u_screenXRatio, position.y * u_screenYRatio, position.z);
-    gl_Position = vec4(u_scale * position, 1);
+    gl_Position = a_position;
 }
 `;
 
