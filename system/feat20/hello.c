@@ -1,11 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<malloc.h>
-#include<string.h>
 #include<unistd.h>
-#include<fcntl.h>
-#include<string.h>
-#include<limits.h>
 
 void listen_fd(int fd) {
     FILE* output = fdopen(fd, "r");
