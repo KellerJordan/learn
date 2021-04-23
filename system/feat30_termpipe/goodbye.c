@@ -21,7 +21,7 @@ int main() {
         printf("%s\n", buf);
     }
 
-    fcntl(fd , F_SETFL, ~(flags & O_NONBLOCK));
+    fcntl(fd , F_SETFL, flags);
     while (1) {
         nRead = read(fd, buf, sizeof buf - 1);
         if (nRead < 0) {
