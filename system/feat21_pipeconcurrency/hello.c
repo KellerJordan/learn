@@ -1,12 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<malloc.h>
 #include<string.h>
 #include<unistd.h>
 #include<fcntl.h>
 #include<string.h>
 #include<limits.h>
-#include<wait.h>
 
 int main(int argc, char** argv) {
     int mypipe[2];
