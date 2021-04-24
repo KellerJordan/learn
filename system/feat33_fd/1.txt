@@ -1,0 +1,8 @@
+writing to fd=1
+writing to fd=1
+writing to fd=1
+writing to fd=1
+writing to fd=1
+writing to fd=1
+writing to fd=1
+writing to fd=1

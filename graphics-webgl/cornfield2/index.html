@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebGL tests</title>
+        <style>
+            body {
+                width: 900px;
+                margin: 0 auto;
+            }
+            #canv {
+                display: block;
+                margin: 100px auto 0 auto;
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>WebGL Tests</h1>
+        <canvas id="canv" width="700px" height="700px"></canvas>
+        <script id="vertex-shader-2d" type="notjs">
+            uniform mat3 u_vTransform;
+            uniform mat4 u_r2cTransform;
+            uniform vec3 u_myPosition;
+            uniform float u_screenZ;
+            uniform float u_xShift;
+
+            attribute vec3 a_position;
+            attribute vec3 a_color;
+
+            varying vec3 v_color;
+
+            vec3 r_position;
+
+            void main() {
+                v_color = a_color;
+
+                r_position = u_vTransform * vec3(a_position.x + u_xShift, a_position.yz) - u_myPosition;
+                gl_Position = u_screenZ * u_r2cTransform * vec4(r_position, 1);
+            }
+        </script>
+        <script id="fragment-shader-2d" type="notjs">
+            precision mediump float;
+            varying vec3 v_color;
+
+            void main() {
+                //gl_FragColor = vec4(1, 0.5, 0.5, 1.0);
+                gl_FragColor = vec4(v_color, 1.0);
+            }
+        </script>
+        <script src="script.js"></script>
+    </body>
+</html>

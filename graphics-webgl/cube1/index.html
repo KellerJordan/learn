@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebGL tests</title>
+        <style>
+            body {
+                margin: 0;
+            }
+            #canv {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="canv"></canvas>
+        <script id="vertex-shader-2d" type="notjs">
+            // literal constants
+            // real coordinates to clip-space coordinates ``3d transform"
+            mat4 r2cTransform = mat4(
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 0, 1,
+                0, 0, -0.1, 0
+            );
+
+            // passed constants
+            uniform vec3 u_myPosition;
+            uniform mat3 u_sceneTransform;
+            uniform mat3 u_perspectiveXZTransform;
+            uniform mat3 u_perspectiveYZTransform;
+            uniform mat4 u_viewportTransform;
+
+            uniform float u_screenZ;
+
+            // passed variables
+            attribute vec3 a_position;
+            attribute vec3 a_color;
+
+            // transferred to fragment shader
+            varying vec3 v_color;
+
+            // computational variables
+            vec3 r_position;
+
+            void main() {
+                v_color = a_color;
+
+                r_position = u_sceneTransform * a_position - u_myPosition;
+                gl_Position = u_viewportTransform * u_screenZ * r2cTransform * vec4(u_perspectiveYZTransform * u_perspectiveXZTransform * r_position, 1);
+            }
+        </script>
+        <script id="fragment-shader-2d" type="notjs">
+            precision mediump float;
+            varying vec3 v_color;
+
+            void main() {
+                //gl_FragColor = vec4(1, 0.5, 0.5, 1.0);
+                gl_FragColor = vec4(v_color, 1.0);
+            }
+        </script>
+        <script src="script.js"></script>
+    </body>
+</html>
