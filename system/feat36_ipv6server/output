@@ -1,0 +1,34 @@
+HTTP/1.1 200 OK
+Vary: Accept-Encoding
+Content-Type: text/html
+Accept-Ranges: bytes
+ETag: "1383709636"
+Last-Modified: Mon, 24 Feb 2020 06:06:27 GMT
+Content-Length: 1062
+Connection: close
+Date: Mon, 26 Apr 2021 19:53:26 GMT
+Server: lighttpd/1.4.45
+
+<html><head><title>Demo Server</title></head>
+<body>
+<p>
+
+This is the root page of the demo server.  The interesting examples live in the
+<a href="/example/">/example</a> directory.  They are:
+
+</p>
+
+<ul>
+
+<li><a href="/example/directory/">/example/directory/</a>: An example of a directory.</li>
+<li><a href="/example/fiona.jpg">/example/fiona.jpg</a>: An example image (one of Kevin's cats).</li>
+<li><a href="/example/hello.txt">/example/hello.txt</a>: A simple text file.</li>
+<li><a href="/example/index.html">/example/index.html</a>: An HTML file serving as the default page for the /example directory.</li>
+<li><a href="/example/pic.html">/example/pic.html</a>: An HTML file that links to the cat picture.</li>
+<li><a href="/example/pride_and_prejudice.pdf">/example/pride_and_prejudice.pdf</a>: A large PDF (binary) file containing Jane Austen's "Pride and Prejudice".</li>
+<li><a href="/example/pride_and_prejudice.txt">/example/pride_and_prejudice.txt</a>: A large text file containing Jane Austen's "Pride and Prejudice".</li>
+
+</ul>
+
+</body>
+</html>
